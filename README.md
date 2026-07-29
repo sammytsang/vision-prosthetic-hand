@@ -42,6 +42,20 @@ There's a test that writes and reads 50 commands back to back and asserts every 
 | Motor range | 0–1023 units over 300°, ≈0.29° per unit |
 | Pipeline | Python (tracking, angles, mapping) → MATLAB (motor driving) |
 
+## Run it
+
+```bash
+pip install -r requirements.txt
+python demo.py            # synthetic hand poses — no camera or robot needed
+python demo.py --live     # real webcam + MediaPipe, if installed
+```
+
+The synthetic path drives the full chain and verifies it: curl 0.0 → 1.0 maps
+monotonically to motor positions, the deadband suppresses 10 near-identical
+frames to 0 commands, a flexion of 1e6 degrees clamps inside the mechanical
+limits, and the same pose at two distances from the camera gives an angle
+difference of exactly 0.
+
 ## Use it
 
 ```python
